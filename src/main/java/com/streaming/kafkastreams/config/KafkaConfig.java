@@ -20,6 +20,18 @@ public class KafkaConfig {
     @Value("${kafka.schema-registry}")
     private String schemaRegistry;
 
+    public String getApplication() {
+        return application;
+    }
+
+    public String getBootstrapServers() {
+        return bootstrapServers;
+    }
+
+    public String getSchemaRegistry() {
+        return schemaRegistry;
+    }
+
     public Properties getSettings() {
         Properties settings = new Properties();
         settings.put(StreamsConfig.APPLICATION_ID_CONFIG, application);
