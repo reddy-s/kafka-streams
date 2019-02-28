@@ -1,9 +1,17 @@
 package com.streaming.kafkastreams.processors.impl;
 
-import com.streaming.kafkastreams.config.KafkaConfig;
+import com.streaming.avro.messages.Tweet;
+import com.streaming.avro.messages.TweetKey;
+import com.streaming.kafkastreams.config.KafkaStreamsCustomConfig;
 import com.streaming.kafkastreams.processors.KSProcessor;
+import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.Topology;
+import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Printed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +22,8 @@ import java.util.Properties;
 @Service
 public class ReTweetConter implements KSProcessor {
 
+    private Logger log = LoggerFactory.getLogger(ReTweetConter.class);
+
     @Value("${processor.retweet-count.input-topic}")
     String inputTopic;
 
@@ -23,19 +33,24 @@ public class ReTweetConter implements KSProcessor {
     @Value("${processor.retweet-count.app-id}")
     String applicationId;
 
-    KafkaConfig kafkaConfig;
+    private Properties properties;
 
-    Properties properties;
-
-    public ReTweetConter(KafkaConfig kafkaConfig) {
-        this.properties = kafkaConfig.getSettings();
-        this.properties.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
+    public ReTweetConter(KafkaStreamsCustomConfig config) {
+        this.properties = config.getSettings();
     }
 
     @Bean("ReTweetCountProcessor")
     @ConditionalOnProperty(name = "processor.retweet-count.enabled")
     public void processor() {
+        // adding applicationId property
+        this.properties.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
+        // building a stream
         StreamsBuilder builder = new StreamsBuilder();
+        KStream<TweetKey, Tweet> inputStream = builder.stream(inputTopic);
+        inputStream.print(Printed.toSysOut());
+        Topology topology = builder.build();
+        KafkaStreams streams = new KafkaStreams(topology, this.properties);
+        streams.start();
     }
 
 }
