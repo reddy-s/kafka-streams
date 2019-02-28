@@ -11,7 +11,6 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 import java.util.Properties;
 
 @Configuration
-@Primary
 public class KafkaConfig {
 
     @Value("${spring.application.name}")
@@ -20,7 +19,6 @@ public class KafkaConfig {
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Bean(name = "kafka-properties")
     public Properties getSettings() {
         Properties settings = new Properties();
         settings.put(StreamsConfig.APPLICATION_ID_CONFIG, application);
