@@ -8,8 +8,10 @@ spring:
 
 processor:
   retweet-count:
-    input-topic:
-    output-topic:
+    app-id: retweet-counter
+    enabled: true
+    input-topic: tweets
+    output-topic: retweet-count
   yourkey:
     input-topic:
     output-topic:

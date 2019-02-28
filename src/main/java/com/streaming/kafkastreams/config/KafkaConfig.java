@@ -11,18 +11,11 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfig {
 
-    @Value("${spring.application.name}")
-    private String application;
-
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
 
     @Value("${kafka.schema-registry}")
     private String schemaRegistry;
-
-    public String getApplication() {
-        return application;
-    }
 
     public String getBootstrapServers() {
         return bootstrapServers;
@@ -34,7 +27,6 @@ public class KafkaConfig {
 
     public Properties getSettings() {
         Properties settings = new Properties();
-        settings.put(StreamsConfig.APPLICATION_ID_CONFIG, application);
         settings.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         settings.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, SpecificAvroSerde.class);
         settings.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde.class);
