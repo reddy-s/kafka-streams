@@ -11,6 +11,13 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	maven {
+		url 'https://pkgs.dev.azure.com/reddyhorcrux/_packaging/avro-messages/maven/v1'
+		credentials {
+			username "AZURE_ARTIFACTS"
+			password System.getenv("AVRO_MESSAGES_ACCESS_TOKEN") ?: "${AvroMessagesAccessToken}"
+		}
+	}
 }
 
 dependencies {
