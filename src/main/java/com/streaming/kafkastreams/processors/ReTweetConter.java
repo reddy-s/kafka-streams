@@ -9,6 +9,7 @@ import java.util.Properties;
 public class ReTweetConter {
 
     KafkaConfig kafkaConfig;
+
     Properties properties;
 
     public ReTweetConter(KafkaConfig kafkaConfig) {

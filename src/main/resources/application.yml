@@ -1,6 +1,15 @@
 kafka:
   bootstrap-servers: localhost:9092
+  schema-registry: httpt://localhost:8081
 
 spring:
   application:
     name: streams-app
+
+processor:
+  retweet-count:
+    input-topic:
+    output-topic:
+  yourkey:
+    input-topic:
+    output-topic:

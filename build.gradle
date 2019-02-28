@@ -18,13 +18,16 @@ repositories {
 			password System.getenv("AVRO_MESSAGES_ACCESS_TOKEN") ?: "${AvroMessagesAccessToken}"
 		}
 	}
+	maven { url "http://packages.confluent.io/maven/" }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.apache.kafka:kafka-streams'
-	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
-	compile(group: 'com.streaming', name: 'avro-messages', version: '1.0')
+	compile group: "org.apache.kafka", name: "kafka-clients", version: "2.0.0"
+	compile group: "org.apache.kafka", name: "kafka-streams", version: "2.0.0"
+	compile group: "io.confluent", name: "kafka-streams-avro-serde", version: "5.0.0"
+	compile group: "io.confluent", name: "kafka-avro-serializer", version: "5.0.0"
+	compile(group: 'com.streaming', name: 'avro-messages', version: '1.1-SNAPSHOT')
 }
