@@ -1,7 +1,6 @@
 package com.streaming.kafkastreams.processors.impl;
 
-import com.streaming.avro.messages.Tweet;
-import com.streaming.avro.messages.TweetKey;
+import com.streaming.avro.messages.tweets.Key;
 import com.streaming.kafkastreams.config.KafkaStreamsCustomConfig;
 import com.streaming.kafkastreams.processors.KSProcessor;
 import org.apache.kafka.streams.KafkaStreams;
@@ -46,7 +45,7 @@ public class ReTweetConter implements KSProcessor {
         this.properties.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
         // building a stream
         StreamsBuilder builder = new StreamsBuilder();
-        KStream<TweetKey, Tweet> inputStream = builder.stream(inputTopic);
+        KStream<Key, com.streaming.avro.messages.tweets.Value> inputStream = builder.stream(inputTopic);
         inputStream.print(Printed.toSysOut());
         Topology topology = builder.build();
         KafkaStreams streams = new KafkaStreams(topology, this.properties);

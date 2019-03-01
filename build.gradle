@@ -29,5 +29,5 @@ dependencies {
 	compile group: "org.apache.kafka", name: "kafka-streams", version: "2.0.0"
 	compile group: "io.confluent", name: "kafka-streams-avro-serde", version: "5.0.0"
 	compile group: "io.confluent", name: "kafka-avro-serializer", version: "5.0.0"
-	compile(group: 'com.streaming', name: 'avro-messages', version: '1.1-SNAPSHOT')
+	compile(group: 'com.streaming', name: 'avro-messages', version: '1.4-SNAPSHOT')
 }
